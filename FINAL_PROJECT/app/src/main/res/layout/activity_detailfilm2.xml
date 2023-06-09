@@ -145,7 +145,7 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@drawable/ic_favorite_white_24dp" />
+                            android:src="@drawable/baseline_tv_24" />
 
                     </LinearLayout>
 

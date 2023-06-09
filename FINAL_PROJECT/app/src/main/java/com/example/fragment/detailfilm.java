@@ -30,6 +30,7 @@ public class detailfilm extends AppCompatActivity {
         latarposter=findViewById(R.id.latarposter);
         back=findViewById(R.id.back);
         getMovieDetail();
+        getSupportActionBar().setTitle("Movies Detail");
 
 //        kembali
         back.setOnClickListener(new View.OnClickListener() {

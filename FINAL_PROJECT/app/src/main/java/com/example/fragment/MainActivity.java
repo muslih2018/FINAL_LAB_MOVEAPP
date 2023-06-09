@@ -13,9 +13,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,21 +34,30 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     FloatingActionButton  btnPost;
     CardView TV_shows,Favorites,Movies;
-    ImageView btnHome,btnProfil;
+    ImageView btnHome,btnProfil,panah,cari;
     FirstFragment FirstFragment;
     fragment2Fragment fragment2Fragment;
 
     fragmentprofil fragmentprofil;
+    TextView navbar,hot;
+    View garisbawah,garisbawah2;
 
-    String kondisiback;
 
-    @SuppressLint("MissingInflatedId")
+    LinearLayout tempatcategory,category,caritampil;
+    RelativeLayout paddingakalin;
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //hapus title barnya
+        getSupportActionBar().hide();
         TV_shows=findViewById(R.id.TV_shows);
+        hot=findViewById(R.id.hot);
         Movies=findViewById(R.id.movies);
+        garisbawah=findViewById(R.id.garisbawah);
+        garisbawah2=findViewById(R.id.garisbawah2);
+        navbar=findViewById(R.id.navbar);
         Favorites=findViewById(R.id.Favorites);
         btnHome = findViewById(R.id.home);
         btnPost = findViewById(R.id.post);
@@ -52,9 +69,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TV_shows.setOnClickListener(this);
         Movies.setOnClickListener(this);
 
-        getSupportActionBar().setTitle("Movies");
+        navbar.setText("Movies");
 
         menuHome();
+        ////untuk menu cari
+        cari=findViewById(R.id.cari);
+        caritampil=findViewById(R.id.caritampil);
+        paddingakalin=findViewById(R.id.paddingakalin);
+        final boolean[] isHidden2 = {true};
+        cari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TransitionManager.beginDelayedTransition(caritampil, new AutoTransition());
+
+                if (isHidden2[0]) {
+                    cari.setImageResource(R.drawable.baseline_close_24);
+                    paddingakalin.setPadding(0,45,0,0);
+                    caritampil.setVisibility(View.VISIBLE);
+                    isHidden2[0] = false;
+                } else {
+                    cari.setImageResource(R.drawable.ic_search_light_gray_24dp);
+                    paddingakalin.setPadding(0,0,0,0);
+                    caritampil.setVisibility(View.GONE);
+                    isHidden2[0] = true;
+                }
+            }
+        });
+        ////untuk menu category
+        category=findViewById(R.id.category);
+        tempatcategory=findViewById(R.id.tempatcategory);
+        panah=findViewById(R.id.panah);
+        ///sedikit animasi );
+        final boolean[] isHidden = {true};
+        final boolean[] isRotated = {false};
+
+        category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TransitionManager.beginDelayedTransition(tempatcategory, new AutoTransition());
+
+                if (isHidden[0] && !isRotated[0]) {
+                    Animation rotateAnimation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotateAnimation.setDuration(300);
+                    rotateAnimation.setFillAfter(true);
+                    panah.startAnimation(rotateAnimation);
+                    isRotated[0] = true;
+                    tempatcategory.setVisibility(View.VISIBLE);
+                    isHidden[0] = false;
+                } else {
+                    Animation rotateAnimation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotateAnimation.setDuration(300);
+                    rotateAnimation.setFillAfter(true);
+                    panah.startAnimation(rotateAnimation);
+                    isRotated[0] = false;
+                    tempatcategory.setVisibility(View.GONE);
+                    isHidden[0] = true;
+                }
+            }
+        });
     }
     //////'semua fragmen
 
@@ -226,29 +298,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == btnHome || v==Movies) {
-            if( getSupportActionBar().getTitle().toString().equalsIgnoreCase("Movies")){
+            if( navbar.equals("Movies")){
 
             }
             else {
-                getSupportActionBar().setTitle("Movies");
+                navbar.setText("Movies");
+                garisbawah.setVisibility(View.VISIBLE);
+                garisbawah2.setVisibility(View.GONE);
+                hot.setText("Hot Movies");
                 menuHome();}
         }
         if (v == btnPost || v==Favorites) {
-            if( getSupportActionBar().getTitle().toString().equalsIgnoreCase("Favorites")){
+            if( navbar.equals("Favorites")){
 
             }
             else {
-                getSupportActionBar().setTitle("Favorites");
+                hot.setText("Your Favorites");
+                navbar.setText("Favorites");
+                garisbawah2.setVisibility(View.GONE);
+                garisbawah.setVisibility(View.GONE);
                 menuPost();
             }
 
         }
         if (v == btnProfil || v==TV_shows) {
-            if( getSupportActionBar().getTitle().toString().equalsIgnoreCase("TV_Shows")){
+            if( navbar.equals("TV_Shows")){
 
             }
             else {
-                getSupportActionBar().setTitle("TV_Shows");
+                hot.setText("Hot Tv Shows");
+               navbar.setText("TV_Shows");
+               garisbawah2.setVisibility(View.VISIBLE);
+               garisbawah.setVisibility(View.GONE);
                 menuProfil();}
 
         }

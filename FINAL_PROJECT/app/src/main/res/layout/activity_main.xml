@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/dark"
-        android:paddingTop="24dp"
+        android:paddingVertical="8dp"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
@@ -28,19 +28,20 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/paddingakalin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp">
+                    >
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:src="@drawable/ic_menu_white_24dp" />
+                        android:id="@+id/cari"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_search_light_gray_24dp" />
 
                     <TextView
+                        android:id="@+id/navbar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="64dp"
@@ -49,19 +50,14 @@
                         android:textColor="#FFFFFF"
                         android:textSize="24sp" />
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/baseline_movie_filter_24" />
-
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/caritampil"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="18dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:orientation="horizontal">
@@ -92,7 +88,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -101,19 +97,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
 
-                <TextView
+                    android:id="@+id/category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="4dp"
-                    android:fontFamily="@font/calibri"
                     android:padding="8dp"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:fontFamily="@font/calibri"
                     android:text="Category"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
-
+                    <ImageView
+                        android:id="@+id/panah"
+                        android:layout_marginTop="-3dp"
+                        android:layout_marginLeft="-4dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_keyboard_arrow_down_24"/>
+                </LinearLayout>
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -121,6 +128,8 @@
                     android:scrollbars="none">
 
                     <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/tempatcategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -269,13 +278,14 @@
                 </HorizontalScrollView>
 
                 <TextView
+                    android:id="@+id/hot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:fontFamily="@font/calibri"
                     android:padding="8dp"
-                    android:text="Hot Film"
+                    android:text="Hot Movies"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
 
@@ -299,7 +309,7 @@
 
             </LinearLayout>
 
-        </ScrollView>
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/post"
@@ -311,6 +321,7 @@
             android:backgroundTint="@color/button"
             android:src="@drawable/baseline_movie_filter_24"
             app:fabSize="normal" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -335,12 +346,13 @@
                     android:layout_gravity="center"
                     android:src="@drawable/baseline_home_24" />
 
-<!--                <View-->
-<!--                    android:layout_width="84dp"-->
-<!--                    android:layout_height="2dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:background="@color/colorPrimaryDark" />-->
+                <View
+                    android:id="@+id/garisbawah"
+                    android:layout_width="84dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorPrimaryDark" />
 
             </LinearLayout>
 
@@ -359,12 +371,13 @@
                     android:src="@drawable/baseline_person_24" />
 
                 <View
+                    android:id="@+id/garisbawah2"
                     android:layout_width="84dp"
                     android:layout_height="2dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
                     android:background="@color/colorPrimaryDark"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>
