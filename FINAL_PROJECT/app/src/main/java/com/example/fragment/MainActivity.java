@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     fragmentprofil fragmentprofil;
 
+    String kondisiback;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Movies.setOnClickListener(this);
 
         getSupportActionBar().setTitle("Movies");
+
         menuHome();
     }
     //////'semua fragmen
@@ -103,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             fragmentTransaction.commit();
-                ft.commit();
+            ft.commit();
 
         }
     }
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             fragmentTransaction.commit();
-//            ft.commit();
+            ft.commit();
 
         }
     }
@@ -171,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Fragment fragment = fragmentManager.findFragmentByTag("FirstFragment");
         Fragment fragment2 = fragmentManager.findFragmentByTag("fragmenprofil");
         Fragment fragment3 = fragmentManager.findFragmentByTag("fragmenpost");
+
         // Sembunyikan Fragment sebelumnya (jika ada)
 
         if(fragment2 != null){
@@ -209,11 +213,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }  if (fragment != null && fragment.isVisible()) {
                 fragmentTransaction.hide(fragment);
             }
-             if (fragment3 != null && fragment3.isVisible()) {
+            if (fragment3 != null && fragment3.isVisible()) {
                 fragmentTransaction.hide(fragment3);
             }
-                 fragmentTransaction.commit();
-//                 ft.commit();
+            fragmentTransaction.commit();
+            ft.commit();
         }
 
     }
@@ -226,8 +230,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             else {
-            getSupportActionBar().setTitle("Movies");
-            menuHome();}
+                getSupportActionBar().setTitle("Movies");
+                menuHome();}
         }
         if (v == btnPost || v==Favorites) {
             if( getSupportActionBar().getTitle().toString().equalsIgnoreCase("Favorites")){
@@ -235,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             else {
                 getSupportActionBar().setTitle("Favorites");
-            menuPost();
+                menuPost();
             }
 
         }
@@ -244,8 +248,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             else {
-            getSupportActionBar().setTitle("TV_Shows");
-            menuProfil();}
+                getSupportActionBar().setTitle("TV_Shows");
+                menuProfil();}
 
         }
 
