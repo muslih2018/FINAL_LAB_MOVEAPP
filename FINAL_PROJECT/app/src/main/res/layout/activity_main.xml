@@ -344,7 +344,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/baseline_home_24" />
+                    android:src="@drawable/baseline_movie_24" />
 
                 <View
                     android:id="@+id/garisbawah"
@@ -368,7 +368,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/baseline_person_24" />
+                    android:src="@drawable/baseline_tv_24" />
 
                 <View
                     android:id="@+id/garisbawah2"
