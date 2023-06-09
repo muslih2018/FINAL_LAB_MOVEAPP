@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             fragmentTransaction.commit();
-            ft.commit();
+//            ft.commit();
 
         }
     }
@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Fragment fragment = fragmentManager.findFragmentByTag("FirstFragment");
         Fragment fragment2 = fragmentManager.findFragmentByTag("fragmenprofil");
         Fragment fragment3 = fragmentManager.findFragmentByTag("fragmenpost");
-
         // Sembunyikan Fragment sebelumnya (jika ada)
 
         if(fragment2 != null){
@@ -214,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction.hide(fragment3);
             }
                  fragmentTransaction.commit();
-                 ft.commit();
+//                 ft.commit();
         }
 
     }

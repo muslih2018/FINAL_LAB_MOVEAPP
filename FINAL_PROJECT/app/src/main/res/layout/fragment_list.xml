@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/gambar"
+                android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -36,7 +36,7 @@
 
                 <TextView
                     android:layout_marginLeft="4dp"
-                    android:id="@+id/desc"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
@@ -53,6 +53,7 @@
                     android:weightSum="100">
 
                     <TextView
+                        android:id="@+id/releaseDate"
                         android:layout_marginLeft="4dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
