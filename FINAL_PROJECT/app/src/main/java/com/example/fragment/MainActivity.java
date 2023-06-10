@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //hapus title barnya
         getSupportActionBar().hide();
         TV_shows=findViewById(R.id.TV_shows);
@@ -197,19 +198,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Sembunyikan Fragment sebelumnya (jika ada)
 
         if(fragment3 != null){
+            fragmentTransaction.remove(fragment3);
+            fragment2Fragment = new fragment2Fragment();
+            FragmentTransaction ft = getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container,fragment2Fragment, "fragmenpost");
             if(fragment != null && fragment2 != null && fragment.isVisible()&& fragment2.isVisible()){
                 fragmentTransaction.hide(fragment);
                 fragmentTransaction.hide(fragment2);
-            }
-            if(fragment != null && fragment.isVisible() ){
-                fragmentTransaction.hide(fragment);
-            }
-            if(fragment2 != null && fragment2.isVisible() ){
-                fragmentTransaction.hide(fragment2);
-            }
-            fragmentTransaction.show(fragment3);
-            fragmentTransaction.commit();
 
+            }  if (fragment != null&& fragment.isVisible()) {
+                fragmentTransaction.hide(fragment);
+
+
+            }
+            if (fragment2 != null&& fragment2.isVisible()) {
+                fragmentTransaction.hide(fragment2);
+
+
+            }
+            fragmentTransaction.commit();
+            ft.commit();
         }
 
         else {
@@ -322,7 +331,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
         if (v == btnProfil || v==TV_shows) {
-            if( navbar.equals("TV_Shows")){
+            if( navbar.equals("TV_Shows")) {
+                ////data favorite
 
             }
             else {
@@ -330,6 +340,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                navbar.setText("TV_Shows");
                garisbawah2.setVisibility(View.VISIBLE);
                garisbawah.setVisibility(View.GONE);
+                Bundle bundle = getIntent().getBundleExtra("favoritemovie");
+                if(bundle!=null){
+                    String title = bundle.getString("title");
+                    Toast.makeText(getApplicationContext(), title, Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "kontol", Toast.LENGTH_SHORT).show();
+
+                }
                 menuProfil();}
 
         }

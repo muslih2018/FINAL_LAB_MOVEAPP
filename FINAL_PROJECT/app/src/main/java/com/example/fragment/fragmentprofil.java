@@ -48,7 +48,6 @@ public class fragmentprofil extends Fragment implements OnMovieListener2 {
         configureRecycleView();
         return view;
     }
-    // init recycleView and adding data to it
     private void configureRecycleView() {
         recycleViewAdapter2 = new MovieRecycleView2(this);
         recyclerView2.setAdapter(recycleViewAdapter2);

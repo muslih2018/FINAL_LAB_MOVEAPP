@@ -5,11 +5,13 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="20dp"
+    android:orientation="vertical"
+    android:id="@+id/fragment2Layout"
     tools:context=".fragment2Fragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_gravity="center"
-        android:id="@+id/tvData"
+        android:id="@+id/Favoriteslistresy"
         tools:listitem="@layout/fragment_list3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
