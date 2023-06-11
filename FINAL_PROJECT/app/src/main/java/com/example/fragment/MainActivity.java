@@ -84,14 +84,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(intent!=null){
         datacek =intent.getBooleanExtra("data_key",false);
         if(datacek==false){
-        menuHome();}
+        menuHome();
+        }
         else {
+            hot.setText("Your Favorites");
+            navbar.setText("Favorites");
+            garisbawah2.setVisibility(View.GONE);
+            garisbawah.setVisibility(View.GONE);
+            pemberitahuanoffline.setVisibility(View.GONE);
+            container.setVisibility(View.VISIBLE);
+            datacek=false;
             menuPost();
         }
         }
-        else {
-            menuPost();
-        }
+
 
         ////untuk menu cari
         cari=findViewById(R.id.cari);
@@ -151,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
    ////metode untuk mengubah visbility dari text belum ada data di favorite
    public void updateTextViewVisibility(int visibility) {
-       TextView textView = findViewById(R.id.pemberitahuan);
        textView.setVisibility(visibility);
    }
     //////semua fragmen

@@ -9,7 +9,12 @@ tools:context=".fragmentprofil"
 android:layout_gravity="center"
 android:orientation="vertical"  >
 
-
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        android:layout_width="37dp"
+        android:layout_height="52dp"
+        android:visibility="gone"
+        />
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recyclerview2"
     android:layout_gravity="center"

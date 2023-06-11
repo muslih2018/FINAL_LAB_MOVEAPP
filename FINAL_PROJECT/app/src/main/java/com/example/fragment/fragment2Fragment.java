@@ -4,24 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,8 +23,6 @@ import java.util.ArrayList;
 
 
 public class fragment2Fragment extends Fragment {
-
-
     private RecyclerView recyclerView;
     private ArrayList<Users> user_list;
     private static final String SP_KEY="user_list_sp";
@@ -45,7 +37,7 @@ public class fragment2Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fragment2, container, false);
         user_list=new ArrayList<>();
 
-        ////ubah visibility dari texviewpemberitahuan yang ada di mainactivity
+        ////ubah visibility dari texview pemberitahuan yang ada di mainactivity
         recyclerView=view.findViewById(R.id.Favoriteslistresy);
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getContext());
         String json_String=sharedPreferences.getString(SP_KEY,null);
@@ -59,7 +51,8 @@ public class fragment2Fragment extends Fragment {
         if (user_list_local != null && !user_list_local.isEmpty()) {
             visibility = View.GONE; // Sembunyikan  pemberitahuan jika ada data
         } else {
-            visibility = View.VISIBLE; // Tampilkan  pemberitahuan jika tidak ada data
+            visibility = View.VISIBLE;
+            // Tampilkan  pemberitahuan jika tidak ada data
         }
         MainActivity mainActivity = (MainActivity) getActivity();
         if (mainActivity != null) {
@@ -127,9 +120,12 @@ public class fragment2Fragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return user_list.size();
+            if (user_list != null) {
+                return user_list.size();
+            } else {
+                return 0;
+            }
         }
-        ///cek jika terjadi perubahan data
 
     }
 
