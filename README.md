@@ -11,5 +11,5 @@ by MOH MUSLIH SAHMAT
 
 - Tv_show/popular
 
-Thanyou );
+Thankyou );
 
