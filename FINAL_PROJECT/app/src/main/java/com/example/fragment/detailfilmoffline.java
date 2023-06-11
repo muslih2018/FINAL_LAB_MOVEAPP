@@ -2,7 +2,9 @@ package com.example.fragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -21,8 +23,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class detailfilm extends AppCompatActivity {
-    private ImageView poster,latarposter,back;
+public class detailfilmoffline extends AppCompatActivity {
+    private ImageView poster,latarposter,back,jenisfilm;
     private TextView title,releaseDate,rating,overview;
     Button tambahkefavorite;
     private ArrayList<Users>user_list;
@@ -33,7 +35,7 @@ public class detailfilm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailfilm);
+        setContentView(R.layout.activity_detailfilmoffline);
         sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
         String jsonString = sharedPreferences.getString(SP_KEY, null);
         if (jsonString != null) {
@@ -43,58 +45,55 @@ public class detailfilm extends AppCompatActivity {
         } else {
             user_list = new ArrayList<>();
         }
-        tambahkefavorite=findViewById(R.id.tambahkefavorite);
+        tambahkefavorite=findViewById(R.id.tambahkefavorite2);
         title = findViewById(R.id.titleDetail);
         overview = findViewById(R.id.overview);
         releaseDate = findViewById(R.id.releaseDateDetail);
         rating = findViewById(R.id.ratingTextDetail);
         poster = findViewById(R.id.poster);
         latarposter=findViewById(R.id.latarposter);
+        jenisfilm = findViewById(R.id.jenisfilm);
         back=findViewById(R.id.back);
-        //ambil dat yang dikirm dari Firstfragment
-            MovieModel model = getIntent().getParcelableExtra("movie");
-            // string text
-            String getRating = String.valueOf(model.getVote_average());
-            title.setText(model.getTitle());
-            releaseDate.setText(model.getRelease_date());
-            overview.setText(model.getOverview());
-            rating.setText(getRating);
-            // poster
-            Glide.with(this).load(Credentials.Poster_URL + model.getPoster_path()).into(poster);
-            // latar poster
-            Glide.with(this).load(Credentials.Poster_URL + model.getBackdrop_path()).into(latarposter);
-            getSupportActionBar().setTitle("Movies Detail");
 
+        //ambil data yang dikirm dari Favoritefragment
+
+        Bundle bundle = getIntent().getExtras();
+        String getJenisgambar = bundle.getString("getJenisgambar");
+        String getTitle = bundle.getString("getTitle");
+        String getPoster_path = bundle.getString("getPoster_path");
+        String getRelease_date = bundle.getString("getRelease_date");
+        String getOverview = bundle.getString("getOverview");
+        String getBackdrop_path = bundle.getString("getBackdrop_path");
+        String getVote_average = bundle.getString("getVote_average");
+
+        //tampilkan data yang di ambil
+        title.setText(getTitle);
+        overview.setText(getOverview);
+        releaseDate.setText(getRelease_date);
+        rating.setText(getVote_average);
+        Glide.with(this).load(getPoster_path).into(poster);
+        Glide.with(this).load(getBackdrop_path).into(latarposter);
+        jenisfilm.setImageURI(Uri.parse(getJenisgambar));
+
+        getSupportActionBar().setTitle("Movies Detail");
         //kembali
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(detailfilmoffline.this, MainActivity.class);
+                boolean datacek = true ;
+                intent.putExtra("data_key", datacek);
+                startActivity(intent);
                 finish();
             }
         });
         ///kirim data ke fragment favorite(Mainactivity) ):
-        String backdropUrl = Credentials.Poster_URL + model.getBackdrop_path();
-        Uri posterUri1 = Uri.parse(backdropUrl);
-        String backdropUrl2 = Credentials.Poster_URL + model.getPoster_path();
-        Uri posterUri21 = Uri.parse(backdropUrl2);
-        String posterUri = posterUri1.toString();
-        String posterUri2 = posterUri21.toString();
-        String title,releaseDate,overview,rating;
-        title=model.getTitle();
-        releaseDate=model.getRelease_date();
-        overview=model.getOverview();
-        rating=String.valueOf(model.getVote_average());
-
-        //ambil Resources terus ubah ke string
-        Resources res = getResources();
-        String jenis = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + res.getResourcePackageName(R.drawable.baseline_movie_24) + '/' + res.getResourceTypeName(R.drawable.baseline_movie_24) + '/' + res.getResourceEntryName(R.drawable.baseline_movie_24);
-
-        // Buat objek Users baru dengan data yang dibutuh
-        Users newUser = new Users(title,posterUri,posterUri2,overview,releaseDate,rating,jenis);
-        // Periksa apakah data sudah ada dalam user_list atau tdk
-        ///ambil  color dari color resource
+       // Buat objek Users baru dengan data yang dibutuh
+        Users newUser = new Users(getTitle,getPoster_path,getBackdrop_path,getOverview,getRelease_date,getVote_average,getJenisgambar);
+//        // Periksa apakah data sudah ada dalam user_list atau tdk
+//        ///ambil  color dari color resource
         for (Users user : user_list) {
-            if (user.getTitle().equalsIgnoreCase(newUser.getTitle()) && user.getOverview().equalsIgnoreCase(newUser.getOverview())) {
+            if (user.getTitle().equalsIgnoreCase(newUser.getTitle())) {
                 tambahkefavorite.setBackgroundResource(R.drawable.buttonshaperemove);
                 tambahkefavorite.setText("REMOVE FROM FAVORITE");
                 isDuplicate = true;
@@ -106,7 +105,7 @@ public class detailfilm extends AppCompatActivity {
             }
         }
 
-        ////tambah ke favvorite ketika di klik
+//        ////tambah ke favvorite ketika di klik
         tambahkefavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +114,7 @@ public class detailfilm extends AppCompatActivity {
                 String moviename2 = null;
                 for (Users user : user_list) {
                     moviename= user.getTitle();
-                    if (user.getTitle().equalsIgnoreCase(newUser.getTitle()) && user.getOverview().equalsIgnoreCase(newUser.getOverview())) {
+                    if (user.getTitle().equalsIgnoreCase(newUser.getTitle())) {
                         tambahkefavorite.setBackgroundResource(R.drawable.buttonshaperemove);
                         tambahkefavorite.setText("REMOVE FROM FAVORITE");
                         isDuplicate = true;
@@ -127,7 +126,7 @@ public class detailfilm extends AppCompatActivity {
                         tambahkefavorite.setText("ADD TO FAVORITE");
                     }
                 }
-                // Jika data belum ada dalam user_list, tambahkan ke dalamnya
+//                // Jika data belum ada dalam user_list, tambahkan ke dalamnya
                 if (!isDuplicate) {
                     user_list.add(newUser);
                     moviename2= newUser.getTitle();

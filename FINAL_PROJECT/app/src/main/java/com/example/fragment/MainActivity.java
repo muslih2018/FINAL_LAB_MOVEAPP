@@ -9,8 +9,13 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -41,18 +46,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     fragmentprofil fragmentprofil;
     TextView navbar,hot;
     View garisbawah,garisbawah2;
-
-
-    LinearLayout tempatcategory,category,caritampil;
+    TextView textView,pemberitahuanoffline;
+    LinearLayout tempatcategory,category,caritampil,container;
     RelativeLayout paddingakalin;
+    boolean datacek;
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //hapus title barnya
         getSupportActionBar().hide();
+
+        pemberitahuanoffline=findViewById(R.id.pemberitahuanoffline);
+        container=findViewById(R.id.container);
+        textView = findViewById(R.id.pemberitahuan);
         TV_shows=findViewById(R.id.TV_shows);
         hot=findViewById(R.id.hot);
         Movies=findViewById(R.id.movies);
@@ -69,10 +77,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Favorites.setOnClickListener(this);
         TV_shows.setOnClickListener(this);
         Movies.setOnClickListener(this);
-
         navbar.setText("Movies");
 
-        menuHome();
+        /////cek kondisi pada sudah kembali dari detailoffline atau tdk );
+        Intent intent = getIntent();
+        if(intent!=null){
+        datacek =intent.getBooleanExtra("data_key",false);
+        if(datacek==false){
+        menuHome();}
+        else {
+            menuPost();
+        }
+        }
+        else {
+            menuPost();
+        }
+
         ////untuk menu cari
         cari=findViewById(R.id.cari);
         caritampil=findViewById(R.id.caritampil);
@@ -129,8 +149,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-    //////'semua fragmen
-
+   ////metode untuk mengubah visbility dari text belum ada data di favorite
+   public void updateTextViewVisibility(int visibility) {
+       TextView textView = findViewById(R.id.pemberitahuan);
+       textView.setVisibility(visibility);
+   }
+    //////semua fragmen
     void menuHome() {
 
 //        ubah warna layout button
@@ -177,6 +201,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction.hide(fragment2);
 
 
+            }
+            /////pengecekan konesksi
+            if (!isNetworkAvailable()) {
+                showNoConnectionToast();
+            }
+            else {
+                pemberitahuanoffline.setVisibility(View.GONE);
+                container.setVisibility(View.VISIBLE);
             }
             fragmentTransaction.commit();
             ft.commit();
@@ -308,52 +340,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v == btnHome || v==Movies) {
             if( navbar.equals("Movies")){
-
+                ///tidak melakukan apa2 karena berada di menu yang sama
             }
             else {
                 navbar.setText("Movies");
                 garisbawah.setVisibility(View.VISIBLE);
                 garisbawah2.setVisibility(View.GONE);
                 hot.setText("Hot Movies");
+                textView.setVisibility(View.GONE);
+                /////pengecekan konesksi
+                if (!isNetworkAvailable()) {
+                    showNoConnectionToast();
+                }
+                else {
+                    pemberitahuanoffline.setVisibility(View.GONE);
+                    container.setVisibility(View.VISIBLE);
+                }
                 menuHome();}
         }
         if (v == btnPost || v==Favorites) {
             if( navbar.equals("Favorites")){
-
+                ///tidak melakukan apa2 karena berada di menu yang sama
             }
             else {
                 hot.setText("Your Favorites");
                 navbar.setText("Favorites");
                 garisbawah2.setVisibility(View.GONE);
                 garisbawah.setVisibility(View.GONE);
+                pemberitahuanoffline.setVisibility(View.GONE);
+                container.setVisibility(View.VISIBLE);
                 menuPost();
             }
 
         }
         if (v == btnProfil || v==TV_shows) {
             if( navbar.equals("TV_Shows")) {
-                ////data favorite
-
+               ///tidak melakukan apa2 karena berada di menu yang sama
             }
             else {
                 hot.setText("Hot Tv Shows");
                navbar.setText("TV_Shows");
                garisbawah2.setVisibility(View.VISIBLE);
+               textView.setVisibility(View.GONE);
                garisbawah.setVisibility(View.GONE);
-                Bundle bundle = getIntent().getBundleExtra("favoritemovie");
-                if(bundle!=null){
-                    String title = bundle.getString("title");
-                    Toast.makeText(getApplicationContext(), title, Toast.LENGTH_SHORT).show();
-
+                /////pengecekan konesksi
+                if (!isNetworkAvailable()) {
+                    showNoConnectionToast();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "kontol", Toast.LENGTH_SHORT).show();
-
+                    pemberitahuanoffline.setVisibility(View.GONE);
+                    container.setVisibility(View.VISIBLE);
                 }
-                menuProfil();}
+               menuProfil();}
 
         }
 
 
+    }
+    //cek kondisi jaringan
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private void showNoConnectionToast() {
+         pemberitahuanoffline.setVisibility(View.VISIBLE);
+         container.setVisibility(View.GONE);
     }
 }

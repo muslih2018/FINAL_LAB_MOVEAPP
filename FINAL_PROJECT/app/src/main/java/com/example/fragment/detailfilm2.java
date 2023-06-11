@@ -78,6 +78,7 @@ public class detailfilm2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+
             }
         });
 

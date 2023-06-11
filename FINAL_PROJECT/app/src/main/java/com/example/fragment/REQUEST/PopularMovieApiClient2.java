@@ -32,7 +32,7 @@ public class PopularMovieApiClient2 {
     // live data
     private final MutableLiveData<List<MovieModel2>> popularMovieLiveData;
 
-    // global variable for runnable
+    // global variable untuk runnable
     private PopularRunnable popularRunnable;
 
     private PopularMovieApiClient2() {
@@ -58,7 +58,7 @@ public class PopularMovieApiClient2 {
         }, 3000, TimeUnit.MILLISECONDS);
     }
 
-    // retrieve data from rest api using runnable
+    // retrieve data dari rest api menggunkan runnable
     private class PopularRunnable implements Runnable {
 
         private final int page;
@@ -85,9 +85,6 @@ public class PopularMovieApiClient2 {
                         List<MovieModel2> popularMovieList = new ArrayList<>(((PopularMovieResponses2) response.body()).getMovies());
 
                         if (page == 1) {
-                            // send data to live data
-                            // post value -> using banckground thread
-                            // set value
                             popularMovieLiveData.postValue(popularMovieList);
                         } else {
                             List<MovieModel2> currentMovie = popularMovieLiveData.getValue();

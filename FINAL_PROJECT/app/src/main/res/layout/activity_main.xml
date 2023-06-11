@@ -288,6 +288,32 @@
                     android:text="Hot Movies"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
+                <TextView
+                    android:visibility="gone"
+                    android:layout_marginTop="200dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/pemberitahuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/element"
+                    android:textStyle="bold"
+                    android:text="You haven,t favorited any film yet"
+                    android:textSize="20sp"
+                    />
+                <TextView
+                    android:visibility="gone"
+                    android:layout_marginTop="200dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/pemberitahuanoffline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/element"
+                    android:textStyle="bold"
+                    android:text="Please check your internet connection"
+                    android:textSize="20sp"
+                    />
 
                 <LinearLayout
                     android:id="@+id/container"
@@ -298,10 +324,6 @@
                     android:paddingTop="8dp"
                     android:paddingRight="8dp"
                     android:paddingBottom="64dp">
-
-
-
-
 
 
                 </LinearLayout>

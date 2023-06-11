@@ -1,19 +1,18 @@
 package com.example.fragment;
-
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.fragment.ADPATERNYA.MovieRecycleView;
 import com.example.fragment.ADPATERNYA.OnMovieListener;
 import com.example.fragment.MODELNYA.MovieModel;
@@ -42,9 +41,14 @@ public class FirstFragment extends Fragment implements OnMovieListener {
 
         // configuring recycleview
         configureRecycleView();
+
+        /////pengecekan konesksi
+        if (!isNetworkAvailable()) {
+            showNoConnectionToast();
+        }
         return view;
     }
-    // init recycleView and adding data to it
+    // init recycleView dan tambah data
     private void configureRecycleView() {
         recycleViewAdapter = new MovieRecycleView(this);
         recyclerView.setAdapter(recycleViewAdapter);
@@ -53,7 +57,7 @@ public class FirstFragment extends Fragment implements OnMovieListener {
 
     private void ObservasingAnyChangesPopularMovie() {
         popularMovieListViewModel.getPopularMovie().observe(getViewLifecycleOwner(), movieModels -> {
-            // observing any data changes
+            // observasi ketik data di ganti
             if (movieModels != null) {
                 for (MovieModel model : movieModels) {
                     // get data
@@ -67,9 +71,20 @@ public class FirstFragment extends Fragment implements OnMovieListener {
 
     @Override
     public void onMovieClick(int pos) {
-        // here is going to detail movie that has clicked
+        // ketika data movie di klik
         Intent intent = new Intent(getContext(),detailfilm.class);
         intent.putExtra("movie",recycleViewAdapter.getSelectedMovie(pos));
         startActivity(intent);
+    }
+
+    //cek kondisi jaringan
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private void showNoConnectionToast() {
+        Toast.makeText(getContext(), "Cek koneksi internet Anda", Toast.LENGTH_SHORT).show();
     }
 }
