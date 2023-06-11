@@ -88,7 +88,7 @@
             android:layout_height="match_parent"
             >
             <ImageView
-
+               android:id="@+id/jenisgambar"
                 android:src="@drawable/baseline_movie_24"
                 android:layout_gravity="end|bottom"
                 android:layout_width="20dp"

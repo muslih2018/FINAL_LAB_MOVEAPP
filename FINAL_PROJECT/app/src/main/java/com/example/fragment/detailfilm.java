@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,7 +49,7 @@ public class detailfilm extends AppCompatActivity {
         } else {
             user_list = new ArrayList<>();
         }
-
+        tambahkefavorite=findViewById(R.id.tambahkefavorite);
         title = findViewById(R.id.titleDetail);
         overview = findViewById(R.id.overview);
         releaseDate = findViewById(R.id.releaseDateDetail);
@@ -76,8 +78,7 @@ public class detailfilm extends AppCompatActivity {
                 finish();
             }
         });
-        ///kirim data ke fragment yang ada di activity favorite di main_activity(activity lain) ):
-        tambahkefavorite=findViewById(R.id.tambahkefavorite);
+        ///kirim data ke fragment favorite(Mainactivity) ):
         String backdropUrl = Credentials.Poster_URL + model.getBackdrop_path();
         Uri posterUri1 = Uri.parse(backdropUrl);
         String backdropUrl2 = Credentials.Poster_URL + model.getPoster_path();
@@ -90,8 +91,12 @@ public class detailfilm extends AppCompatActivity {
         overview=model.getOverview();
         rating=String.valueOf(model.getVote_average());
 
-        // Buat objek Users baru dengan data yang diperlukan
-        Users newUser = new Users(title,posterUri,posterUri2,overview,releaseDate,rating,"movies");
+        //ambil Resources terus ubah ke string
+        Resources res = getResources();
+        String jenis = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + res.getResourcePackageName(R.drawable.baseline_movie_24) + '/' + res.getResourceTypeName(R.drawable.baseline_movie_24) + '/' + res.getResourceEntryName(R.drawable.baseline_movie_24);
+
+        // Buat objek Users baru dengan data yang dibutuh
+        Users newUser = new Users(title,posterUri,posterUri2,overview,releaseDate,rating,jenis);
         // Periksa apakah data sudah ada dalam user_list atau tdk
         ///ambil  color dari color resource
         for (Users user : user_list) {
@@ -107,6 +112,7 @@ public class detailfilm extends AppCompatActivity {
             }
         }
 
+        ////tambah ke favvorite ketika di klik
         tambahkefavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

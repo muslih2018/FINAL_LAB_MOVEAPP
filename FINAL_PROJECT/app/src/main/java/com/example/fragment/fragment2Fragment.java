@@ -58,12 +58,13 @@ public class fragment2Fragment extends Fragment {
     class UserViewHolder extends RecyclerView.ViewHolder{
         public TextView title;
         public TextView release_date;
-        public ImageView Poster_path;
+        public ImageView Poster_path,jenisgambar;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             title=itemView.findViewById(R.id.title);
             release_date=itemView.findViewById(R.id.release_date);
             Poster_path=itemView.findViewById(R.id.Poster_path);
+            jenisgambar=itemView.findViewById(R.id.jenisgambar);
         }
     }
     class UserViewAdapter extends RecyclerView.Adapter{
@@ -84,6 +85,7 @@ public class fragment2Fragment extends Fragment {
             final  Users u=user_list.get(i);
             final UserViewHolder userViewHolder= (UserViewHolder) viewHolder;
             Glide.with(getContext()).load(u.getPoster_path()).into(((UserViewHolder) viewHolder).Poster_path);
+            userViewHolder.jenisgambar.setImageURI(Uri.parse(u.getJenisgambar()));
             userViewHolder.title.setText(u.getTitle());
             userViewHolder.release_date.setText(u.getRelease_date());
         }
