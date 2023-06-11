@@ -18,12 +18,12 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="380dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/latarposter"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="350dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/spider4" />
 
@@ -76,12 +76,12 @@
                     android:layout_marginVertical="10dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="50">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="100">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
@@ -109,6 +109,7 @@
                             android:orientation="horizontal"
                             android:layout_height="wrap_content">
                             <ImageView
+                                android:layout_marginLeft="-3dp"
                                 android:layout_gravity="center"
                                 android:id="@+id/rate"
                                 android:layout_width="wrap_content"
@@ -130,15 +131,15 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="50">
+                    >
 
                     <LinearLayout
                         android:layout_marginVertical="10dp"
                         android:layout_marginHorizontal="5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="bottom|right"
                         android:gravity="right"
                         android:orientation="vertical">

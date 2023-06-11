@@ -94,17 +94,15 @@ public class detailfilm extends AppCompatActivity {
         Users newUser = new Users(title,posterUri,posterUri2,overview,releaseDate,rating,"movies");
         // Periksa apakah data sudah ada dalam user_list atau tdk
         ///ambil  color dari color resource
-        int colorREMOVE = getResources().getColor(R.color.element);
-        int colorADD = getResources().getColor(R.color.button);
         for (Users user : user_list) {
             if (user.getTitle().equalsIgnoreCase(newUser.getTitle()) && user.getOverview().equalsIgnoreCase(newUser.getOverview())) {
-                tambahkefavorite.setBackgroundColor(colorREMOVE);
+                tambahkefavorite.setBackgroundResource(R.drawable.buttonshaperemove);
                 tambahkefavorite.setText("REMOVE FROM FAVORITE");
                 isDuplicate = true;
                 break;
             }
             else {
-                tambahkefavorite.setBackgroundColor(colorADD);
+                tambahkefavorite.setBackgroundResource(R.drawable.buttonshape);
                 tambahkefavorite.setText("ADD TO FAVORITE");
             }
         }
@@ -118,14 +116,14 @@ public class detailfilm extends AppCompatActivity {
                 for (Users user : user_list) {
                     moviename= user.getTitle();
                     if (user.getTitle().equalsIgnoreCase(newUser.getTitle()) && user.getOverview().equalsIgnoreCase(newUser.getOverview())) {
-                        tambahkefavorite.setBackgroundColor(colorREMOVE);
+                        tambahkefavorite.setBackgroundResource(R.drawable.buttonshaperemove);
                         tambahkefavorite.setText("REMOVE FROM FAVORITE");
                         isDuplicate = true;
                         duplicateUser = user;
                         break;
                     }
                     else {
-                        tambahkefavorite.setBackgroundColor(colorADD);
+                        tambahkefavorite.setBackgroundResource(R.drawable.buttonshape);
                         tambahkefavorite.setText("ADD TO FAVORITE");
                     }
                 }
@@ -139,7 +137,7 @@ public class detailfilm extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(SP_KEY, jsonString);
                     editor.apply();
-                    tambahkefavorite.setBackgroundColor(colorREMOVE);
+                    tambahkefavorite.setBackgroundResource(R.drawable.buttonshaperemove);
                     tambahkefavorite.setText("REMOVE FROM FAVORITE");
                     Toast.makeText(getApplicationContext(), moviename2+" added to favorite successfully", Toast.LENGTH_SHORT).show();
 
@@ -152,7 +150,7 @@ public class detailfilm extends AppCompatActivity {
                     editor.putString(SP_KEY, jsonString);
                     editor.apply();
                     isDuplicate = false;
-                    tambahkefavorite.setBackgroundColor(colorADD);
+                    tambahkefavorite.setBackgroundResource(R.drawable.buttonshape);
                     tambahkefavorite.setText("ADD TO FAVORITE");
 
                 }

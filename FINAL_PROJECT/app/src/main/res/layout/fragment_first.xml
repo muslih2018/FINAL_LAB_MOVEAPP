@@ -6,6 +6,7 @@
             android:layout_height="wrap_content"
             android:fillViewport="true"
             tools:context=".FirstFragment"
+            android:layout_gravity="center"
             android:orientation="vertical"  >
 
     <androidx.recyclerview.widget.RecyclerView
